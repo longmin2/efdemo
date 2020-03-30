@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        function one() {
+            $.ajax({
+                type: 'get',
+                url: 'https://localhost:44379/api/Values/ProductByID?id=2',
+                data: null,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data, statues) {
+                    $.each(data, function (i, item) {
+                        //两个参数，第一个参数表示下标，第二个参数表示一维数组中的每一个数组
+                        //   console.log(i + '````' + item);
+                        alert(item.Name);
+                    });
+                }
+
+            });
+            
+        }
+        function two() {
+            var ojb = {}
+          // ojb.Id = 2;
+            ojb.Name = "妈妈的x";
+            $.ajax({
+                type: 'Post',
+                url: 'https://localhost:44379/api/Values/AddProduct',
+                data: JSON.stringify( ojb),
+                contentType: 'application/json; charset=utf-8',
+               dataType: 'json',
+                success: function (data, statues) {
+                    alert(data);
+                }
+
+            });
+
+        }
+        function three() {
+        
+            $.ajax({
+                type: 'Post',
+                url: 'https://localhost:44379/api/Values/Post',
+                data:"乖乖",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data, statues) {
+                    alert(data);
+                }
+
+            });
+
+        }
+        function four() {
+            $.ajax({
+                type: 'Post',
+                url: '/api/Values/bazid',
+                data: { id: 9, name: "五二" },
+                dataType: 'json',
+                success: function (res, statues) {
+                  //  alert(res.message)
+                    // alert(res.data);
+                    alert(res)
+                }
+            });
+
+
+        }
+    </script>
+</head>
+<body>
+    <input type="button" onclick="one()" value="get" />
+    <input type="button" onclick="two()" value="post" />
+    <input type="button" onclick="three()" value="返回string" />
+    <input type="button" onclick="four()" value="4" />
+</body>
+</html>
