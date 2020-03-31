@@ -36,10 +36,11 @@ namespace EFCoreDemo
                 //}
 
 
-              
+
                 return obj;
             }
         }
+        //查询单条
         public static T GetModel<T>(string table, string key, string kevalue)
         {
             string sql = "select * from " + table + " where " + key + "=" + kevalue;
@@ -86,6 +87,37 @@ namespace EFCoreDemo
                 var red = connection.ExecuteReader(sql);
                 tb.Load(red);
                 return tb;
+            }
+        }
+        //新增单条
+        public static int Insert(TestAccounts obj)
+        {
+            string sql = "INSERT INTO TestAccounts (GameID,nickname) Values (@gameid,@nname);";
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+
+                return connection.Execute(sql, new { gameid = obj.Gameid, nname = obj.NickName });
+
+            }
+        }
+        //新增多条
+        public static int InsertMany()
+        {
+            string sql = "INSERT INTO TestAccounts (GameID,nickname) Values (@gameid,@nname);";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var rowscount = connection.Execute(sql,
+                    new[]
+                    {
+                      new {gameid = 565656, nname = "北京"},
+                      new {gameid =787878, nname = "上海"},
+                      new {gameid = 434343, nname = "四川"}
+                    }
+                );
+
+                return rowscount;
             }
         }
     }
