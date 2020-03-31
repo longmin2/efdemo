@@ -75,7 +75,10 @@ namespace EFCoreDemo
             //    new TestAccounts{Gameid=212121,NickName="2舅棋牌"}
             //};
             // buniessBll.InsertMany(list);
-            buniessBll.DleteWhere(2222227);
+            // buniessBll.DleteWhere(2222227);
+
+            // DapperDemo.Insert(new TestAccounts { Gameid = 44444, NickName = "误了有" });
+            DapperDemo.InsertMany();
             Console.WriteLine("处理完成");
             Console.Read();
         }
