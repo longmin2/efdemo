@@ -61,7 +61,8 @@ namespace EFCoreDemo
                 //EFCoreDemo.listDetail(db);
                 //  EFCoreDemo.GroupBy(db);
                 // EFCoreDemo.page(db,1,2);
-               // EFCoreDemo.listDetail(db);
+                // EFCoreDemo.listDetail(db);
+                //EFCoreDemo.ExePro(db);
             }
 
             //  buniessBll.getSingle();
@@ -78,10 +79,11 @@ namespace EFCoreDemo
             // buniessBll.DleteWhere(2222227);
 
             // DapperDemo.Insert(new TestAccounts { Gameid = 44444, NickName = "误了有" });
-            DapperDemo.InsertMany();
+            //DapperDemo.InsertMany();
+            // DapperDemo.ExeproSelect();
             Console.WriteLine("处理完成");
             Console.Read();
         }
-       
+
     }
 }
