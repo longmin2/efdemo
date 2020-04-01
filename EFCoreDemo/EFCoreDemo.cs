@@ -1,9 +1,11 @@
 ﻿using EFCoreDemo.Entity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,7 +14,7 @@ namespace EFCoreDemo
 {
     public class EFCoreDemo
     {
-      
+
         //联合查询(join on)
         public static void listDetail(Context db)
         {
@@ -72,8 +74,8 @@ namespace EFCoreDemo
             var sd = from userinfo in db._UserInfo
                      group userinfo by userinfo.Gameid into gg
                      select new { keys = gg.Key, cnt = gg.Count() };
-          
-           
+
+
             foreach (var re in sd)
             {
                 string key = re.keys.ToString();
@@ -85,12 +87,12 @@ namespace EFCoreDemo
         public static List<TestAccounts> QueryBy_in(Context db)
         {
             int[] gameid = { 555555, 2222227 };
-            string[] nickname = { "葡京殷商","测试一下2" };
-            List<TestAccounts> df = db._UserInfo.Where(b => gameid.Contains(b.Gameid)&&nickname.Contains(b.NickName)).ToList();
+            string[] nickname = { "葡京殷商", "测试一下2" };
+            List<TestAccounts> df = db._UserInfo.Where(b => gameid.Contains(b.Gameid) && nickname.Contains(b.NickName)).ToList();
             // var ya = db._UserInfo.Where(b => gameid.Contains(b.Gameid) && nickname.Contains(b.NickName)).ToList();
             //  string sd=  ya.ToString();
             // var sql = ((System.Data.Objects.ObjectQuery)query).ToTraceString();
-         
+
             return df;
         }
         #region 用户表
@@ -205,6 +207,17 @@ namespace EFCoreDemo
                       }).ToList();
         }
 
+
+        #endregion
+
+        //分页
+
+        public static void page(Context db, int pageindex, int pagesize)
+        {
+            var list = db._UserInfo.ToList();
+            var list1 = list.Where(c => c.UserID > 5).ToList();
+            var b = list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList();
+        }
         // 使用sql语句
         public static void queryBySql(Context db)
         {
@@ -219,18 +232,26 @@ namespace EFCoreDemo
             }
 
         }
-        #endregion
-
-        //分页
-
-        public static void page(Context db,int pageindex,int pagesize)
+        public static void ExePro(Context db)
         {
-            var list= db._UserInfo.ToList();
-            var  list1= list.Where(c => c.UserID > 5).ToList();
-            var b=list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList();
+
+            //返回对象集合.
+            //string sql = string.Format("execute dbo.test2 @userid={0}", 9999);
+            //var blogs = db._UserInfo.FromSqlRaw(sql);
+            // .ToList();
+            // int df  = db.Database.ExecuteSqlCommand($"exec test2 {uid}", sql);
+
+            //long uid = 4;
+            // int data = db.Database.ExecuteSqlCommand($"exec test2 {uid}", uid);
+
+            //返回受影响行数
+            //var userid = 7777;
+            //var mesg = "7个";
+            //int result=  db.Database.ExecuteSqlCommand("test2 @p0,@p1", userid, mesg);
+
+
         }
-      
     }
 
-  
+
 }
