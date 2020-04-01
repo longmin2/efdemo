@@ -89,7 +89,7 @@ namespace EFCoreDemo
                 return tb;
             }
         }
-        //新增单条
+        //新增单条delete update同理
         public static int Insert(TestAccounts obj)
         {
             string sql = "INSERT INTO TestAccounts (GameID,nickname) Values (@gameid,@nname);";
@@ -101,7 +101,7 @@ namespace EFCoreDemo
 
             }
         }
-        //新增多条
+        //新增多条delete update同理
         public static int InsertMany()
         {
             string sql = "INSERT INTO TestAccounts (GameID,nickname) Values (@gameid,@nname);";
@@ -119,6 +119,30 @@ namespace EFCoreDemo
 
                 return rowscount;
             }
+        }
+        
+        //存储过程
+        public static void ExeproSelect()
+        {
+           
+            //带输出参数和select
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                var p = new DynamicParameters();
+                p.Add("userid", 999999);
+                p.Add("mesg", "", dbType: DbType.String, direction: ParameterDirection.Output);
+                var reader = connection.Query("test1",p,null,true,null,CommandType.StoredProcedure);
+                string newID = p.Get<string>("mesg");
+            }
+            //带输出参数
+            //using (IDbConnection connection = new SqlConnection(connectionString))
+            //{
+            //    var p = new DynamicParameters();
+            //    p.Add("userid", 999999);
+            //    p.Add("mesg", "", dbType: DbType.String, direction: ParameterDirection.Output);
+            //    connection.Execute("test1", p, commandType: CommandType.StoredProcedure);
+            //    string newID = p.Get<string>("mesg");
+            //}
         }
     }
 }
