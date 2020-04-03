@@ -81,6 +81,23 @@ namespace EFCoreDemo
             // DapperDemo.Insert(new TestAccounts { Gameid = 44444, NickName = "误了有" });
             //DapperDemo.InsertMany();
             // DapperDemo.ExeproSelect();
+            //Dictionary<string, string> dic = new Dictionary<string, string>();
+            //dic.Add("A", "a");
+            //dic.Add("B", "b");
+            //var result = dic.Where(x => x.Key == "A").Select(p => new { name = p.Key, value = p.Value });
+
+            //foreach (var v in result)
+            //{
+            //    string xx = v.name;
+            //    string dfd = v.value;
+
+            //}
+           
+            //var result = BankDic.Select(x => new
+            //{
+            //    Name = x.Key,
+            //    Value = x.Value
+            //});
             Console.WriteLine("处理完成");
             Console.Read();
         }
