@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using test;
 
 namespace WebApi.Controllers
 {
@@ -120,7 +121,7 @@ namespace WebApi.Controllers
         //    return new string[] { "到底", "cc" };
         //}
 
-        [HttpGet]
+        [HttpGet]    
         public IHttpActionResult ProductByID(int id)
         {
             List<Product> list = new List<Product>()
@@ -138,6 +139,10 @@ namespace WebApi.Controllers
         [HttpPost]
         public IHttpActionResult AddProduct([FromBody] Product pars)
         {
+            ISMSService service = new SMSService();
+            CoreValue value = service.GetVerifyCode("", "", "1");
+
+
             string name = pars.Name;
             return Ok(name);
         }

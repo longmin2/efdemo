@@ -23,21 +23,22 @@ namespace EFCoreDemo
             //linq
 
             //所有
-            // var result = (from userinfo in db._UserInfo
-            //              join agent in db._Agent_User
-            //              on userinfo.Gameid equals agent.GameID 
-            //              select new { userinfo,agent}
-            //              ).ToList();
-            //指定字段
             var result = (from userinfo in db._UserInfo
                           join agent in db._Agent_User
                           on userinfo.Gameid equals agent.GameID
-                          select new
-                          {
-                              nickname = userinfo.NickName,
-                              ParentID = agent.ParaentGameID
-                          }
+                          select new { userinfo, agent }
                          ).ToList();
+            //指定字段
+            //var result = (from userinfo in db._UserInfo
+            //              join agent in db._Agent_User
+            //              on userinfo.Gameid equals agent.GameID
+            //              where userinfo.Gameid==33  && userinfo.UserID==333 
+            //              select new
+            //              {
+            //                  nickname = userinfo.NickName,
+            //                  ParentID = agent.ParaentGameID
+            //              }
+            //             ).ToList();
             //笛卡尔乘积
             //var result = from userinfo in db._UserInfo
             //             from agent in db._Agent_User
@@ -82,7 +83,25 @@ namespace EFCoreDemo
                 int count = re.cnt;
             }
         }
+        public static List<Agent_User> TestList(Context db)
+        {
+            //所有
+            var result = (from userinfo in db._UserInfo
+                          join agent in db._Agent_User
+                          on userinfo.Gameid equals agent.GameID
+                          select new { userinfo, agent }
+                         ).ToList();
 
+            var dfd = result.Select(x => new Agent_User()
+            {
+                UserID=x.userinfo.UserID,
+                ParaentGameID=x.agent.ParaentGameID,
+                GameID=x.agent.GameID
+            });
+            List<Agent_User> xs = dfd.OrderByDescending(x => x.UserID).ToList();
+            return xs;
+        }
+           
         //(in) 
         public static List<TestAccounts> QueryBy_in(Context db)
         {
@@ -190,6 +209,18 @@ namespace EFCoreDemo
         public static Agent_User QueryAgent(Context db, int GameID)
         {
             return db.Set<Agent_User>().FirstOrDefault(x => x.GameID == GameID);
+        }
+        public static void insertAgent(Context db, Agent_User obj)
+        {
+            
+            db._Agent_User.Add(obj);
+            //  db.Set<TestAccounts>().Add(OBJ);
+            //   db.Add(OBJ);
+
+          int result=  db.SaveChanges();
+          //  db.Entry(obj);//返回插入的记录并注入到userEntity
+
+            int value = obj.ID;
         }
         //查询部分字段
         public static void queryAgentX(Context db)

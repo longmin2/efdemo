@@ -12,14 +12,15 @@ namespace EFCoreDemo
     public class buniessBll
     {
         private static IRepository<TestAccounts> res = new RepositoryService<TestAccounts>(new Context());
-        public static TestAccounts getSingle()
-        {
-            var u = res.GetById(11) as TestAccounts;
-            return u;
-        }
+    
         public static void list()
         {
-            var list = res.TableNoTracking;
+           var list = res.TableNoTracking.Where(x=>x.Gameid==565656);
+        
+            foreach(var v in list)
+            {
+                var d = v.NickName;
+            }
 
         }
         public static void UpdateUser()
@@ -51,6 +52,8 @@ namespace EFCoreDemo
         public static void Dlete(int gameid)
         {
             var u = res.TableNoTracking.FirstOrDefault(x => x.Gameid == gameid);
+
+            return;
             if (u != null)
             {
                 res.Delete(u);

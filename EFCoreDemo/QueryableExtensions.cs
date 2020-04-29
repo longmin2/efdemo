@@ -19,6 +19,7 @@ namespace EFCoreDemo
         public ILogger CreateLogger(string categoryName) => new EFLogger(categoryName);
         public void Dispose() { }
     }
+    //输出sql语句到控制台
     public class EFLogger : ILogger
     {
         private readonly string categoryName;
