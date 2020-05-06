@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,10 +19,27 @@ namespace EFCoreDemo
         public int Gameid { get; set; }
         public string RegisterDate { get; set; }
     }
+    public class te
+    {
+        public int id { get; set; }
+        public string names { get; set; }
+        public te() { }
+        public te (int id,string names)
+        {
+            this.id = id;
+            this.names = names;
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
+            //  te dfd = new te(3, "我草");
+            // Console.WriteLine(dfd.id + ":" + dfd.names);
+            Console.Write(PhoneTypeCode.xxx);
+            Console.WriteLine(PhoneTypeCode.BindPhone+":"+(int) PhoneTypeCode.BindPhone);
+            Console.ReadLine();
+           
             //TestAccounts TS = new TestAccounts()
             //{
             //    UserID=2333,
@@ -30,15 +48,15 @@ namespace EFCoreDemo
             //    RegisterDate="2019-5-6"
             //};
             //PropertyInfo _findedPropertyInfo = TS.GetType().GetProperty("GAMEID", BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-     
+
             //if (_findedPropertyInfo != null)
             //{
             //   object sfsd=  _findedPropertyInfo.GetValue(TS);
             //    _findedPropertyInfo.SetValue (TS, 555);
-               
+
             //    string sf = TS.Gameid.ToString();
             //}
-           
+
             //Dapper
 
             // DataTable obj = DapperDemo.querySingle();
@@ -73,32 +91,32 @@ namespace EFCoreDemo
 
 
             ////代理
-            using (var db = new Context())
-            {
-                //  Agent_User ag = QueryAgent(db, 222888);
-                //   queryAgentX(db);
-                // listDetail(db);
-                //  GroupBy(db);
-                //   EFCoreDemo.queryBySql(db);
-                //  EFCoreDemo.QueryBy_in(db);
-                //EFCoreDemo.listDetail(db);
-                //  EFCoreDemo.GroupBy(db);
-                // EFCoreDemo.page(db,1,2);
-                // EFCoreDemo.listDetail(db);
-                //EFCoreDemo.ExePro(db);
-                // EFCoreDemo.TestList(db);
-                Agent_User obj = new Agent_User()
-                {
-                    UserID=8787,
-                    GameID=6868,
-                    ParaentGameID=9889
-                };
-                EFCoreDemo.insertAgent(db, obj);
-            }
+            //using (var db = new Context())
+            //{
+            //  Agent_User ag = QueryAgent(db, 222888);
+            //   queryAgentX(db);
+            // listDetail(db);
+            //  GroupBy(db);
+            //   EFCoreDemo.queryBySql(db);
+            //  EFCoreDemo.QueryBy_in(db);
+            //EFCoreDemo.listDetail(db);
+            //  EFCoreDemo.GroupBy(db);
+            // EFCoreDemo.page(db,1,2);
+            // EFCoreDemo.listDetail(db);
+            //EFCoreDemo.ExePro(db);
+            // EFCoreDemo.TestList(db);
+            //Agent_User obj = new Agent_User()
+            //{
+            //    UserID=8787,
+            //    GameID=6868,
+            //    ParaentGameID=9889
+            //};
+            //EFCoreDemo.insertAgent(db, obj);
+            // }
 
             //  buniessBll.getSingle();
             // new buniessBll(new RepositoryService<TestAccounts>(new Context()));
-          //  buniessBll.list();
+            //  buniessBll.list();
             // buniessBll.UpdateUser();
             // buniessBll.Insert(new TestAccounts { Gameid = 888888, NickName = "安安金库" });
             // buniessBll.Dlete(888888);
@@ -143,8 +161,8 @@ namespace EFCoreDemo
             //{
             // TestAsync();
             // }
-            //  GetStrLengthAsync();
-            //  testTbu();
+            TestAsync();
+
             Console.WriteLine("执行结束");
             Console.Read();
         }
@@ -153,16 +171,36 @@ namespace EFCoreDemo
             Console.WriteLine("同步执行结束");
             return "这是同步的";
         }
+
         #region 开始
         static async Task TestAsync()
         {
             Console.WriteLine("Test()开始, Thread Id: {0}\r\n", Thread.CurrentThread.ManagedThreadId);
             var name = GetNameAsync(); //我们这里没有用 await,所以下面的代码可以继续执行
-            // 但是如果上面是 await GetNameAsync()，下面的代码就不会立即执行，输出结果就不一样了。            
+                                       // 但是如果上面是 await GetNameAsync()，下面的代码就不会立即执行，输出结果就不一样了。            
+
+            Console.WriteLine("继续执行其他");
+            XS();
             var res = await name;
-            //
+            //  var name1 = GetNameAsync();
+            //  await Task.WhenAll(name,name1);
+
+
             Console.WriteLine("await GetName1: {0},得到结果进行其它操作", res);
             Console.WriteLine("Test()结束.\r\n");
+        }
+        static void XS()
+        {
+            Console.WriteLine("无关重要");
+        }
+        static Task<string> xxx()
+        {
+            return Task<string>.Run(() =>
+            {
+                Console.WriteLine("个屁了");
+                return "xx";
+            });
+
         }
         static async Task<string> GetNameAsync()
         {
@@ -170,7 +208,7 @@ namespace EFCoreDemo
             Console.WriteLine("GetName()开始， thread Id is: {0}", Thread.CurrentThread.ManagedThreadId);
             return await Task.Run(() =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
                 Console.WriteLine("'GetName' Thread Id: {0}", Thread.CurrentThread.ManagedThreadId);
                 return "Jesse";
             });
@@ -309,6 +347,8 @@ namespace EFCoreDemo
     }
     public enum PhoneTypeCode
     {
+        xxx,
+        日你妈,
         /// <summary>
         /// 绑定手机
         /// </summary>

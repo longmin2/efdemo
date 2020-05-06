@@ -110,7 +110,7 @@ namespace EFCoreDemo
             List<TestAccounts> df = db._UserInfo.Where(b => gameid.Contains(b.Gameid) && nickname.Contains(b.NickName)).ToList();
             // var ya = db._UserInfo.Where(b => gameid.Contains(b.Gameid) && nickname.Contains(b.NickName)).ToList();
             //  string sd=  ya.ToString();
-            // var sql = ((System.Data.Objects.ObjectQuery)query).ToTraceString();
+            //var sql = ((System.Data.Objects.ObjectQuery)query).ToTraceString();
 
             return df;
         }
@@ -130,6 +130,7 @@ namespace EFCoreDemo
         //筛选(模糊查询)
         public static List<TestAccounts> QueryByWhere_Like(Context db, string nickname)
         {
+          
             return db._UserInfo.AsEnumerable().Where(b => b.NickName.Contains(nickname)).ToList();
         }
 
